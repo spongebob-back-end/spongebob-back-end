@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/spongebob-back-end/spongebob-back-end/issues"
   },
-  "homepage": "https://github.com/spongebob-back-end/spongebob-back-end#readme"
+  "homepage": "https://github.com/spongebob-back-end/spongebob-back-end#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "node": "^19.6.0",
+    "sequelize": "^6.28.0",
+    "sqlite3": "^5.1.4"
+  }
 }
