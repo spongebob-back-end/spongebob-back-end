@@ -18,9 +18,13 @@
   },
   "homepage": "https://github.com/spongebob-back-end/spongebob-back-end#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "node": "^19.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.1",
     "sequelize": "^6.28.0",
     "sqlite3": "^5.1.4"
   }
