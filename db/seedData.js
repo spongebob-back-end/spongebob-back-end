@@ -40,3 +40,22 @@ const quotes = [
         quote: "I guess hibernation is the opposite of beauty sleep.",
       }
   ];
+  const users = [
+    {
+      username: "tahar",
+      password: "add"
+    },
+    {
+      username: "antonette",
+      password: "headfirst"
+    },
+    {
+      username: "karianne",
+      password: "scarykary"
+    }
+  ]
+  module.exports = {
+    quotes,
+    users
+    
+  }

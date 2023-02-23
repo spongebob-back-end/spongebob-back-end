@@ -58,6 +58,7 @@ app.get('/Quote',async (req, res, next) => {
     }
 });
 
+
 app.post('/Quote', async (req, res, next) => {
     try {
         res.status(201).send(await Quote.create(req.body));
