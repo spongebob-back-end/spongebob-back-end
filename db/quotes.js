@@ -1,4 +1,4 @@
-const {Sequelize, sequelize} = require('./db');
+const {Sequelize, sequelize} = require('./db.js');
 
 const Quote = sequelize.define('quotes', {
   name: Sequelize.STRING,
