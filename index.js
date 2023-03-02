@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const { User, Quote } = require('./db');
+//const {JWT_SECRET = 'neverTell'} = process.env;
 const JWT_SECRET = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
@@ -11,17 +12,33 @@ app.use(express.urlencoded({extended:true}));
 
 
 
+//Authentication middleware
+const setUser = async (req, res, next) => {
+    const auth = req.header("Authorization");
+    if (!auth) {
+      next();
+    } else {
+      const [, token] = auth.split(" ");
+      const user = jwt.verify(token, JWT_SECRET);
+      req.user = user;
+      next();
+    }
+  };  
 
 // POST /register
 app.post('/register', async (req, res) => {
     try {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        await User.create({
+        const user = await User.create({
             username,
             password: hashedPassword
         });
-        res.send('successfully created user ');
+        const token = jwt.sign(
+            { id: user.id, username: user.username },
+            JWT_SECRET
+          );
+        res.send({ message: "success", token });
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -41,7 +58,11 @@ app.post('/register', async (req, res) => {
         if (!isMatch) {
             return res.status(401).send('incorrect username or password');
         }
-        res.send('successfully logged in user ');
+        const token = jwt.sign(
+            { id: user.id, username: user.username },
+            JWT_SECRET
+          );
+        res.send({ message: "success", token });
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -50,21 +71,10 @@ app.post('/register', async (req, res) => {
 
 
 
-   //Authentication middleware
-  const setUser = async (req, res, next) => {
-    const auth = req.header("Authorization");
-    if (!auth) {
-      next();
-    } else {
-      const [, token] = auth.split(" ");
-      const user = jwt.verify(token, JWT_SECRET);
-      req.user = user;
-      next();
-    }
-  };
+   
 
 
-  app.get('/Quote',async (req, res, next) => {
+  app.get('/Quote',setUser,async (req, res, next) => {
     try {
         res.send(await Quote.findAll());
     }
@@ -75,7 +85,7 @@ app.post('/register', async (req, res) => {
 });
 
 
-app.post('/Quote', setUser, async (req, res, next) => {
+app.post('/Quote',setUser, async (req, res, next) => {
     try {
         res.status(201).send(await Quote.create(req.body));
     }
@@ -85,7 +95,7 @@ app.post('/Quote', setUser, async (req, res, next) => {
     }
 });
 
-app.patch('/Quote/:id', setUser, async (req, res, next) => {
+app.patch('/Quote/:id',setUser, async (req, res, next) => {
     try {
         const quote = await Quote.findByPk(req.params.id);
         await quote.update(req.body);
@@ -97,7 +107,7 @@ app.patch('/Quote/:id', setUser, async (req, res, next) => {
     }
 });
 
-app.delete('/Quote/:id', setUser, async (req, res, next) => {
+app.delete('/Quote/:id',setUser,  async (req, res, next) => {
     try {
         res.status(204).send(await Quote.destroy({ where: { id: req.params.id } }));
     }
