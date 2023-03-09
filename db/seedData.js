@@ -24,35 +24,38 @@ const quotes = [
       quote: "I'm not just ready, I'm ready Freddy!",
     },
     {
-        name: "Patrick Star",
-        quote: "The inner machinations of my mind are an enigma.",
-      },
-      {
-        name: "SpongeBob SquarePants",
-        quote: "Are you feeling it now, Mr. Krabs?",
-      },
-      {
-        name: "Mr. Krabs",
-        quote: "A five-letter word for happiness... money!",
-      },
-      {
-        name: "Squidward Tentacles",
-        quote: "I guess hibernation is the opposite of beauty sleep.",
-      }
+      name: "Patrick Star",
+      quote: "The inner machinations of my mind are an enigma.",
+    },
+    {
+      name: "SpongeBob SquarePants",
+      quote: "Are you feeling it now, Mr. Krabs?",
+    },
+    {
+      name: "Mr. Krabs",
+      quote: "A five-letter word for happiness... money!",
+    },
+    {
+      name: "Squidward Tentacles",
+      quote: "I guess hibernation is the opposite of beauty sleep.",
+    }
+
   ];
   const users = [
-    {
-      username: "tahar",
-      password: "add"
-    },
-    {
-      username: "antonette",
-      password: "headfirst"
-    },
-    {
-      username: "karianne",
-      password: "scarykary"
-    }
+  {
+    username: "tahar",
+    password: "add"
+  },
+  {
+    username: "antonette",
+    password: "headfirst"
+  },
+  {
+    username: "karianne",
+    password: "scarykary"
+  }
+
+  
   ]
   module.exports = {
     quotes,
