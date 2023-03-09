@@ -120,9 +120,6 @@ app.delete('/Quote/:id',setUser,  async (req, res, next) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Quotes are ready at http://localhost:${PORT}`);
-});
 
 
   module.exports = app;
