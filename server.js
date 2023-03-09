@@ -1,4 +1,3 @@
-const { db } = require("./db");
 const app = require('./index.js');
 const { sequelize } = require('./db');
 
