@@ -9,13 +9,10 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-
 app.use(morgan('dev'));
 app.use(cors());
-
-
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 
 //Authentication middleware
@@ -123,8 +120,9 @@ app.delete('/Quote/:id',setUser,  async (req, res, next) => {
     }
 });
 
+app.listen(PORT, () => {
+    console.log(`Quotes are ready at http://localhost:${PORT}`);
+});
 
 
-
-
-module.exports = app;
+  module.exports = app;

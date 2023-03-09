@@ -55,7 +55,7 @@ const quotes = [
     password: "scarykary"
   }
 
-  
+
   ]
   module.exports = {
     quotes,
