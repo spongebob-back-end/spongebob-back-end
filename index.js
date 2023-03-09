@@ -1,5 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
+const cors = require('cors');
 const { User, Quote } = require('./db');
 //const {JWT_SECRET = 'neverTell'} = process.env;
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -8,6 +11,9 @@ const bcrypt = require('bcrypt');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+app.use(morgan('dev'));
+app.use(cors());
 
 
 
