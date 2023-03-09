@@ -25,8 +25,8 @@ const quotes = [
     },
     {
         name: "Patrick Star",
-        quote: "The inner machinations of my mind are an enigma.",
-      },
+       quote: "The inner machinations of my mind are an enigma.",
+    },
       {
         name: "SpongeBob SquarePants",
         quote: "Are you feeling it now, Mr. Krabs?",
