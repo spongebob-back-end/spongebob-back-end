@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
-require('dotenv').config();
+const morgan = require('morgan');
+const cors = require('cors');
 const { User, Quote } = require('./db');
 //const {JWT_SECRET = 'neverTell'} = process.env;
 const {JWT_SECRET_user,JWT_SECRET_admin} = process.env;
@@ -8,7 +10,24 @@ const {JWT_SECRET_user,JWT_SECRET_admin} = process.env;
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 
+app.use(morgan('dev'));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
+app.get('/', async (req, res, next) => {
+    try {
+      res.send(`
+        <h1>Welcome to Spongebob Land!</h1>
+        <p>Quotes are available at <a href="/kittens/1">/kittens/:id</a></p>
+        <p>Create a new cat at <b><code>POST /kittens</code></b> and delete one at <b><code>DELETE /kittens/:id</code></b></p>
+        <p>Log in via POST /login or register via POST /register</p>
+      `);
+    } catch (error) {
+      console.error(error);
+      next(error)
+    }
+});
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -88,7 +107,7 @@ const authenticateUser = async (req, res, next) => {
   });
 
   // Route handler to retrieve entries for authenticated user
-  app.get('/quote', authenticateUser, async (req, res) => {
+  app.get('/quotes', authenticateUser, async (req, res) => {
     try {
       const userId = req.user.id;
       const quotes = await Quote.findAll({ where: { userId }});
@@ -113,7 +132,7 @@ const authenticateUser = async (req, res, next) => {
   });
 
   // Route handler to create an entry for authenticated user
-app.post('/quote', authenticateUser, async (req, res) => {
+app.post('/quotes', authenticateUser, async (req, res) => {
     try {
       const { name, quote } = req.body;
       const userId = req.user.id;
@@ -126,7 +145,7 @@ app.post('/quote', authenticateUser, async (req, res) => {
   });
   
   // Route handler to edit an entry for authenticated user
-  app.put('/quote/:id', authenticateUser, async (req, res) => {
+  app.put('/quotes/:id', authenticateUser, async (req, res) => {
     try {
       const entryId = req.params.id;
       const userId = req.user.id;
@@ -143,7 +162,7 @@ app.post('/quote', authenticateUser, async (req, res) => {
   });
   
   // Route handler to delete an entry for authenticated user
-  app.delete('/quote/:id', authenticateUser, async (req, res) => {
+  app.delete('/quotes/:id', authenticateUser, async (req, res) => {
     try {
       const entryId = req.params.id;
       const userId = req.user.id;
@@ -197,8 +216,12 @@ app.put('/users/:id', authenticateAdmin, async (req, res) => {
 
 
 
-
-
+// error handling middleware
+app.use((error, req, res, next) => {
+    console.error('SERVER ERROR: ', error);
+    if(res.statusCode < 400) res.status(500);
+    res.send({error: error.message, name: error.name, message: error.message});
+});
 
 
 module.exports = app;
