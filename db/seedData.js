@@ -43,16 +43,11 @@ const quotes = [
   const users = [
     {
       username: "tahar",
-      password: "add"
+      password: "12345",
+      isAdmin:true,
+
     },
-    {
-      username: "antonette",
-      password: "headfirst"
-    },
-    {
-      username: "karianne",
-      password: "scarykary"
-    }
+    
   ]
   module.exports = {
     quotes,
